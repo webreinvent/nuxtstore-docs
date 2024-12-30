@@ -18,7 +18,7 @@ The architecture includes the following apps:
 
 #### Web application
 
-Web app follows a Nuxt.js [Structure](https://nuxt.com/docs/guide/directory-structure/nuxt) file structure:
+Web app follows a typical Nuxt.js directory [structure](https://nuxt.com/docs/guide/directory-structure/nuxt) with a few tweaks:
 
 ```shell
 
