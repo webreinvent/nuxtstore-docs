@@ -1,4 +1,8 @@
-# Brief overview & Development guide
+---
+title: Guide
+---
+
+## Brief overview & Development guide
 
 NuxtStore is a platform-agnostic ecommerce frontend solution that allows seamless integration with various ecommerce backends! It provides tools for building customizable, high-performance online storefronts.
 
