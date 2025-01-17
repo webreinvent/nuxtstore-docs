@@ -31,16 +31,16 @@ apps/
      ├── ...
      ├── assets/                  # Static assets
      ├── components/              
-     │   ├── ecommerce/           # Ecommerce-specific components (ProductCard)
-     │   ├── ...
-     │   └── ui/                  # UI components (Header, Footer)
+     │   ├── atoms/               # Atomic components related to feature (e.g atoms/cart/NsAddToCartButton.vue)
+     │   ├── molecules/           # Molecular components made using atoms (e.g molecules/form/NsEmailInput.vue)
+     │   └── organisms/           # Large components made using atoms and molecules (e.g organisms/address/NsAddressCard.vue)
      ├── composables/             # Custom hooks composing reactive logic
      ├── constants/               
      │   ├── api.ts               # API-related constants (HTTP methods)
      │   └── ui.ts                # UI-related constants (colors, breakpoints)
      ├── data/                    # Static data or JSON files
-     ├── layouts/                 # Layouts
-     ├── middleware/              # Client route middleware (e.g auth)
+     ├── layouts/                 # Nuxt Layouts
+     ├── middleware/              # Client side route middlewares 
      │   ├── auth.ts              
      │   └── ...
      ├── pages/                   # Pages
@@ -61,7 +61,7 @@ apps/
      ├── app.vue                  # Application entry point
      ├── nuxt.config.ts           # Nuxt.js configuration
      ├── package.json             # Package entry point
-     ├── tailwind.config.js       # TailwindCSS configuration
+     ├── tailwind.config.ts       # TailwindCSS configuration
      ├── tsconfig.json            # TypeScript configuration
      ├── vitest.config.ts         # Vitest configuration
      └── ...
@@ -70,18 +70,18 @@ apps/
 
 List of essential directories:
 
-- `components/ecommerce` NuxtStore UI components, like `ProductCard` or `Review`
+- `components` NuxtStore UI components, like `ProductCard` or `Review`
 - `stores` Pinia store containing global state, getters and mutators
 - `composables` Contains reusable composition functions, e.g. data fetchers and stateful helpers
 - `shared` Contains types and utilities [shared](https://github.com/nuxt/nuxt/releases/tag/v3.14.0) across client and server e.g `product.type.ts`. Auto-import support will follow in next major release.
 - `tests` Contains mocks for components, composables and store actions
 
-## Guide
+## Project Guide
 
 This project follows a few conventions to help with organizing your code:
 
 - Each function is located in a dedicated module and exported from the `index.ts` file.
-- In this nuxt application, avoid importing auto-imported APIs (ref, onMounted etc.) and PrimeVue components (Dialog, Carousel etc.)
+- In this nuxt application, avoid importing auto-imported APIs (ref, onMounted etc.) or compiler macros (defineProps, defineEmits etc.) and PrimeVue components (Button, InputText, Dialog, Carousel etc.)
 - Names are short, descriptive and must follow our consistent naming convention ([guide](https://docs.vaah.dev/guide/code))
 - Follow this [nuxt guide](https://docs.vaah.dev/guide/nuxt) to avoid common mistakes and comply with industry standard practices
 - Functions (including composables and utils) are exported using explicit named exports instead of anonymous exports
@@ -96,37 +96,51 @@ This project follows a few conventions to help with organizing your code:
 
 ### Components
 
-NuxtStore UI leverages [PrimeVue](https://primevue.org/) as the building blocks of storefront components. All components are auto-imported by their name (no path-prefix) and are located inside subfolders in the `components` directory.
+NuxtStore UI follows [atomic design principle](https://atomicdesign.bradfrost.com/chapter-2/) to develop components and it leverages [PrimeVue](https://primevue.org/) as the building blocks of storefront components. All components are auto-imported by their name (no path-prefix) and are located inside subfolders in the `components` directory.
 
 - Introduction to project components:
 
-  - Representational components that are designed to fulfill project requirements
+  - Consists of representational components that are designed to fulfill project requirements
+  - Components should be placed in dedicated folders inside components directory
+  - Root of the component folder has `atoms`, `molecules` and `organisms`
   - Each component name must be prefixed with **"Ns"** (e.g **NsProductCard**)
   - TypeScript types are located inside the SFC for ease of access and coupling
   - Tests for components are located in the `/tests/components` folder (e.g **NsUserAddress.spec.ts**)
-  - Folders inside /components must follow their purpose 
+  - Folders inside /atoms, /molecules and /organisms must follow their purpose 
 
-Expected file/folder structure:
+Expected directory structure:
 
 ```shell
 components/
- └── ui/
-     └── NsHeader.vue
+ └── atoms/
+     └── cart/
+         └── NsAddToCartButton.vue
+         └── NsCartIcon.vue
+     └── ui/
+         └── NsHeader.vue
+         └── NsFooter.vue
      └── ...
- └── ecommerce/
-     └── NsCartItem.vue
+ └── molecules/
+     └── form/
+         └── NsEmailInput.vue
+         └── NsPasswordInput.vue
      └── ...
- └── forms/
-     └── NsSignUpForm.vue
+ └── organisms/
+     └── address/
+         └── NsAddressCard.vue
+     └── cart/
+         └── NsCartOverview.vue
+     └── forms/
+         └── NsSignUpForm.vue
+         └── NsAddressForm.vue
      └── ...
- └── ...
 ```
 
 For more information about available NuxtStore components for Vue (Nuxt), check out [documentation]().
 
 - **Convention:**
 
-    - Vue (Nuxt) components should follow `Pascal case` pattern (`CategoryFilters`, `Heading`)
+    - Vue (Nuxt) components should follow `PascalCase` pattern (`CategoryFilters`, `Heading`)
     - The types for component's props should be named `{Component}Props` and exist in the same SFC as the component. For example, `GalleryProps` or `HeadingProps`
     - Line of code in a single file component must not exceed 200 (formatted)
 
