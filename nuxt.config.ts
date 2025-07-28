@@ -1,16 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  extends: ['@nuxt/ui-pro'],
+  extends: ['docus'],
 
-  modules: [
-    '@nuxt/content',
-    '@nuxt/eslint',
-    '@nuxt/fonts',
-    '@nuxt/image',
-    '@nuxt/ui',
-    '@nuxthq/studio',
-    'nuxt-og-image'
-  ],
+  modules: ['@nuxtjs/plausible'],
+
+  css: ['~/assets/css/main.css'],
+
+  site: {
+    name: 'NuxtStore',
+  },
 
   devtools: {
     enabled: true
@@ -20,15 +18,11 @@ export default defineNuxtConfig({
     disableTransition: true
   },
 
-  routeRules: {
-    '/api/search.json': { prerender: true }
-  },
-
   future: {
     compatibilityVersion: 4
   },
 
-  compatibilityDate: '2024-07-11',
+  compatibilityDate: '2025-07-18',
 
   nitro: {
     prerender: {
